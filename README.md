@@ -14,3 +14,4 @@ An infuriatingly frequent task for Jira admins at $EMPLOYER involved recovering 
 4. Pull a poppet container and start it
 5. Run ```/root/kickstarter.sh http://url_of_a_postgres_dump```
 6. Start Jira 
+7. Log-in with a local Jira user
