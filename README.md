@@ -15,3 +15,10 @@ An infuriatingly frequent task for Jira admins at $EMPLOYER involved recovering 
 5. Run ```/root/kickstarter.sh http://url_of_a_postgres_dump```
 6. Start Jira 
 7. Log-in with a local Jira user
+
+
+## Known Issues
+
+$EMPLOYER uses an Active Directory bridge, please be wary of non local user logins.
+
+The postgres configurations here are hideously insecure.
