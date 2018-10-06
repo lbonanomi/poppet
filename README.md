@@ -8,12 +8,13 @@ An infuriatingly frequent task for Jira admins at $EMPLOYER involved recovering 
 
 ## How do I run this?
 
-1. Build a docker container with the supplied dockerfile
-2. Push said dockerfile to your internal hub
-3. Wait patiently for an agitated support request
-4. Pull a poppet container and start it as  
+1. Gather requisite RPMs for building a Postgres instance that matches your production. 
+2. Build a docker container with the supplied dockerfile
+3. Push said dockerfile to your internal hub
+4. Wait patiently for an agitated support request
+5. Pull a poppet container and start it as  
    ```docker run -dit -p 8080:8080/tcp --name poppet poppet /root/kickstarter.sh http://postgres_dump_url```
-5. Log-in with a local Jira user
+6. Log-in with a local Jira user
 
 
 ## Known Issues
