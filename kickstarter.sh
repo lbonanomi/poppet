@@ -75,3 +75,5 @@ cat<<EOF > /opt/jirahome/dbconfig.xml
   </jdbc-datasource>
 </jira-database-config>
 EOF
+
+/opt/atlassian-jira-software-7.4.4-standalone/bin/start-jira.sh -fg
