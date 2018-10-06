@@ -45,6 +45,17 @@ curl -s $DBDUMP | LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/opt/rh/rh-postgresql10/root/
 
 su -c "LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/opt/rh/rh-postgresql10/root/usr/lib64 /opt/rh/rh-postgresql10/root/usr/bin/psql  -U $DB_USERNAME $DB_NAME -c \"update cwd_directory  set active = 0 where id != 1;\"" postgres
 
+# What version of Jira was this backed-up from? 
+JIRA_VERSION=$(LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/opt/rh/rh-postgresql10/root/usr/lib64 /opt/rh/rh-postgresql10/root/usr/bin/psql -t -U postgres jiraprdb1 -c "select propertyvalue from propertystring where id = (select id from propertyentry where property_key = 'jira.version');" | tr -d ' ')
+
+cd /opt
+
+echo "Build /opt/atlassian-jira-software-$JIRA_VERSION.tar.gz"
+
+tar -zxvf /opt/atlassian-jira-software-$JIRA_VERSION.tar.gz
+
+
+echo "jira.home = /opt/jirahome" >  /opt/atlassian-jira-software-$JIRA_VERSION-standalone/atlassian-jira/WEB-INF/classes/jira-application.properties
 
 # Assemble Jira's dbconfig.xml
 #
@@ -76,4 +87,4 @@ cat<<EOF > /opt/jirahome/dbconfig.xml
 </jira-database-config>
 EOF
 
-/opt/atlassian-jira-software-7.4.4-standalone/bin/start-jira.sh -fg
+/opt/atlassian-jira-software-$JIRA_VERSION-standalone/bin/start-jira.sh -fg
