@@ -1,7 +1,7 @@
 # poppet
 
 > Instant results! Just add water!
->
+> ~Most Looney Tunes ACME products
 
 
 ## What's this?
@@ -14,7 +14,7 @@ An infuriatingly frequent task for Jira admins at $EMPLOYER involved recovering 
 
 1. Gather requisite RPMs for building a Postgres instance that matches your production version. 
 2. Build a docker container with the supplied dockerfile
-3. Push said dockerfile to your internal hub
+3. Push said dockerfile to your internal hub if you have one.
 4. Wait patiently for an agitated support request
 5. Pull a poppet container and start it as  
    ```docker run -dit -p 8080:8080/tcp --name poppet poppet /root/kickstarter.sh http://postgres_dump_url```
