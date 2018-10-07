@@ -1,5 +1,9 @@
 # poppet
 
+> Instant results! Just add water!
+>
+
+
 ## What's this?
 
 poppet is a docker appliance for rehydrating Jira database dumps.
