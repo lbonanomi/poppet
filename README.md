@@ -1,7 +1,7 @@
 # poppet
 
 > Instant results! Just add water!  
-> ~Most Looney Tunes ACME products  
+> ~Many Looney Tunes ACME products  
 
 
 ## What's this?
