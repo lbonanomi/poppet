@@ -18,7 +18,7 @@ An infuriatingly frequent task for Jira admins at $EMPLOYER involved recovering 
 4. Wait patiently for an agitated support request
 5. Pull a poppet container and start it as  
    ```docker run -dit -p 8080:8080/tcp --name poppet poppet /root/kickstarter.sh http://postgres_dump_url```
-6. Log-in with a local Jira user
+6. Log-in with a local (non-admin) Jira user, or newly created local user "poppet"
 
 
 ## Known Issues
