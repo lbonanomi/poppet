@@ -38,6 +38,7 @@ su -c "LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/opt/rh/rh-postgresql10/root/usr/lib64 /
 #
 su -c "LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/opt/rh/rh-postgresql10/root/usr/lib64 /opt/rh/rh-postgresql10/root/usr/bin/psql -c \"GRANT ALL PRIVILEGES ON DATABASE $DB_NAME to $DB_USERNAME;\"" postgres
 
+
 # Load dump to DB
 #
 curl -s $DBDUMP | LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/opt/rh/rh-postgresql10/root/usr/lib64 /opt/rh/rh-postgresql10/root/usr/bin/psql -U $DB_USERNAME $DB_NAME
@@ -53,12 +54,13 @@ LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/opt/rh/rh-postgresql10/root/usr/lib64 /opt/rh/
 do
         echo $localadmin;
         LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/opt/rh/rh-postgresql10/root/usr/lib64 /opt/rh/rh-postgresql10/root/usr/bin/psql -U $DB_USERNAME $DB_NAME -t -c "update cwd_user set credential='{PKCS5S2}b3c19ePbQB4BAWzb6NogB7oTuSKOATvJxT1JP/1knh+fi1ZwJ8TGmnzmssJsBYvG' where user_name='"$localadmin"';"
+        export $localadmin
 done
 
 
 #####################
 
-# What version of Jira was this backed-up from? 
+# What version of Jira was this backed-up from?
 JIRA_VERSION=$(LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/opt/rh/rh-postgresql10/root/usr/lib64 /opt/rh/rh-postgresql10/root/usr/bin/psql -t -U postgres jiraprdb1 -c "select propertyvalue from propertystring where id = (select id from propertyentry where property_key = 'jira.version');" | tr -d ' ')
 
 cd /opt
@@ -67,8 +69,8 @@ echo "Build /opt/atlassian-jira-software-$JIRA_VERSION.tar.gz"
 
 tar -zxvf /opt/atlassian-jira-software-$JIRA_VERSION.tar.gz
 
-
 echo "jira.home = /opt/jirahome" >  /opt/atlassian-jira-software-$JIRA_VERSION-standalone/atlassian-jira/WEB-INF/classes/jira-application.properties
+
 
 # Assemble Jira's dbconfig.xml
 #
@@ -100,4 +102,22 @@ cat<<EOF > /opt/jirahome/dbconfig.xml
 </jira-database-config>
 EOF
 
-/opt/atlassian-jira-software-$JIRA_VERSION-standalone/bin/start-jira.sh -fg
+
+# Start Jira in background
+#
+
+/opt/atlassian-jira-software-$JIRA_VERSION-standalone/bin/start-jira.sh
+
+
+# After a 5 minute stand-off cycle through all local admins trying to create user "poppet"
+#
+
+sleep 300
+
+LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/opt/rh/rh-postgresql10/root/usr/lib64 /opt/rh/rh-postgresql10/root/usr/bin/psql -U $DB_USERNAME $DB_NAME -t -c "select child_name from cwd_membership where parent_name='jira-administrators' AND directory_id = 1;" | grep -v "^$" | while read localadmin;
+do
+        echo $localadmin;
+        http_proxy="" curl -v -u $localadmin:JiraPassword -H "Content-Type: application/json" -X POST -d '{ "name":"poppet","password":"poppet", "displayName":"least-privilege user", "emailAddress":"none@localhost" }' http://localhost:8080/rest/api/2/user
+done
+
+
