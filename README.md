@@ -23,6 +23,8 @@ An infuriatingly frequent task for Jira admins at $EMPLOYER involved recovering 
 
 ## Known Issues
 
-$EMPLOYER uses an Active Directory bridge, please be wary of non local user logins.
+There is a rave condirion in creating local user 'poppet'.
+
+All local admins will have their passwords reset as part of the process.
 
 The postgres configurations here are hideously insecure.
