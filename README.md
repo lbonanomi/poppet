@@ -23,8 +23,8 @@ An infuriatingly frequent task for Jira admins at $EMPLOYER involved recovering 
 
 ## Known Issues
 
-There is a rave condirion in creating local user 'poppet'.
+* There is a race condirion in creating local user 'poppet'.
 
-All local admins will have their passwords reset as part of the process.
+* All local admins will have their passwords reset as part of the process.
 
-The postgres configurations here are hideously insecure.
+* The postgres configurations here are hideously insecure.
