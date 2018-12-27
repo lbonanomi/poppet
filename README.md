@@ -23,7 +23,7 @@ An infuriatingly frequent task for Jira admins at $EMPLOYER involved recovering 
 
 ## Known Issues
 
-* There is a race condirion in creating local user 'poppet'.
+* There is a race condition in creating local user 'poppet'.
 
 * All local admins will have their passwords reset as part of the process.
 
