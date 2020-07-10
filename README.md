@@ -28,3 +28,6 @@ An infuriatingly frequent task for Jira admins at $EMPLOYER involved recovering 
 * All local admins will have their passwords reset as part of the process.
 
 * The postgres configurations here are hideously insecure.
+
+<!-- Yep, i'm collecting your IP address. -->
+<img src="https://evening-spire-71333.herokuapp.com/">
